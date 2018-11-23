@@ -14,7 +14,6 @@ var progressBarVar;
 var currentInterval = 50;
 var currentGrowth = 15;
 
-var stopRequested = false;
 var spins = 20;
 var count = 0;
 
@@ -42,28 +41,13 @@ $(document).ready(function() {
 		$("#startSlowdownButton").attr("disabled", false);
 		$("#startSlowdownButton").show();
 		$("#startSlowdownButton").focus();
-		$("#acceptButton").hide();
 		intervalVar = setInterval(next, currentInterval);
 		$("#deltagere").fadeOut();				
 	}
-	
-	function clickStartSlowdown() {
-		stopRequested = true;
-		$("#startSlowdownButton").attr("disabled", true);
-	}
-	
+
 	function clickAdd() {
 		var tmp = $("#newName").val();
 		addContestant(tmp);
-	}			
-	
-	function clickAcceptWinner() {
-		$("#winnerimg img").hide();
-		$("#name").text("");
-		
-		removeContestant(contestants[currentDrawnNameIdx])
-		$("#acceptButton").hide();
-		$("#drawButton").focus();
 	}			
 	
 	function clickName(obj) {
@@ -83,7 +67,7 @@ $(document).ready(function() {
 			
 		var idx = contestants.push(newName);
 		
-		var newElement = '<li id="' + idx + '">'+newName+'</li>';
+		var newElement = '<li class="ticket_' + newName + '" id="' + idx + '">'+newName+'</li>';
 		$("#contestents ul").append(newElement);
 		$("#newName").val("");
 
@@ -146,7 +130,6 @@ $(document).ready(function() {
 		
 		numContestants = contestants.length;
 		
-		stopRequested = false;
 		currentInterval = 50;
 		currentGrowth = 15;
 
@@ -154,7 +137,6 @@ $(document).ready(function() {
 		spins = 5 + randomNumber;
 		count = 0;
 		
-		$("#winnerimg img").hide();				
 		$("#name").css("color", "black");
 		$("#name").css("text-style:", "none");	
 	}
@@ -162,14 +144,12 @@ $(document).ready(function() {
 	function next() {	
 		setNextName();
 		
-		if(!stopRequested)
-			return;
 		if (count < spins) 
 			 count++;
 		else 
 			currentInterval = currentInterval+currentGrowth;
 		
-		if (currentInterval < 1100) {
+		if (currentInterval < 600) {
 			if (currentInterval > 500) {
 				currentGrowth+=20;
 			}
@@ -178,13 +158,10 @@ $(document).ready(function() {
 		} else {
 			clearInterval(intervalVar);
 			$("#name").css("color", "navy");
-			$("#winnerimg img").show();
 			$("#drawButton").attr("disabled", false);	
-			$("#startSlowdownButton").hide();
-			$("#acceptButton").show();	
-			$("#acceptButton").focus();
 			$("#deltagere").fadeIn();
 			playWinnerSound();
+			removeContestant(contestants[currentDrawnNameIdx])
 		}
 	}
 	
@@ -200,16 +177,8 @@ $(document).ready(function() {
 		return o;
 	}
 	
-	function getPreSelectedWinner()
-	{
-		// TODO: Implement cheat
-	}
-
-	
 	// Add listeners
 	$("#drawButton").click(clickDrawWinner);
-	$("#startSlowdownButton").click(clickStartSlowdown);
-	$("#acceptButton").click(clickAcceptWinner);
 	$("#addButton").click(clickAdd);
 	
 	$("#newName").keyup(function(event){
@@ -219,13 +188,11 @@ $(document).ready(function() {
 	});
 	
 	// Initialize page elements
-	$("#winnerimg img").hide();
-	$("#acceptButton").hide();
-	$("#startSlowdownButton").hide();
-	$("#newName").focus();
+	$("#drawButton").focus();
 	$("#drawButton").attr("disabled", true);
 	
 	loadConfig();
 	getDefaultContestants();
-	getPreSelectedWinner();
+
+	
 });	

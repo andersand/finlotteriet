@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1" />
 	<title>Lotteriet</title>
 	<meta name="generator" content="TextMate http://macromates.com/">
-	<meta name="author" content="Øyvind Holmstad">
+	<meta name="author" content="Ã˜yvind Holmstad">
 	<link href="styles/finlotteri.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 	<script type="text/javascript" src="script/finlotteri.js"></script>
@@ -15,42 +15,33 @@
 <audio id="audiotag1" src="sounds/startup.mp3" preload="auto"></audio>
 
 <div id="background"></div>
+
 <div class="content">
 	<div id="main-wrapper">
-		<div id="menu">
-			<h1>Finlotteriet</h1>
-		</div>
+		<section id="menu">
+			<h1>Lotteri</h1>
+		</section>
 			
-		<div id="trekning">
-			<div id="winnerimg">
-				<img src="images/Winner.gif"></img>
-			</div>
-<!-- 			<div class="meter">
-				<span style="width: 25%"></span>
-			</div> -->
+		<section id="trekning">
 			<div id="names">
-				<span id="name"></span>
+				<span id="name"></span> <span id="parrot"></span>
 			</div>
 			<div id="buttons">
-				<button id="drawButton">Trekk vinner!</button>
-				<button id="startSlowdownButton">Start nedtelling</button>
-				<button id="acceptButton">Aksepter vinner!</button>
+				<button id="drawButton">Trekk lodd!</button>
+				<!--
+					<input id="newName" type="text"/> <button id="addButton">Legg til</button>
+				-->
 			</div>
-		</div>
+		</section>
 		
-		<div id="deltagere">
-			<h2>Deltagere</h2>
+		<section id="deltagere">
+			<h2>Lodd</h2>
 			<div id="contestents">
 				<ul>
 
 				</ul>
 			</div>
-			<div id="addContestant">
-				<input id="newName" type="text"/>
-				<button id="addButton">Legg til</button>
-			</div>
-		</div>
-		
+		</section>
 	</div>
 </div>
 
