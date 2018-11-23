@@ -1,6 +1,8 @@
 // Constants
-var CONTESTANTS_URL = "data/contestants.csv";
-var CONFIG_URL = "data/config.json";
+const CONTESTANTS_URL = "data/contestants.csv";
+const CONFIG_URL = "data/config.json";
+const PARROT_PROVIDER_URL = "data/parrots.json";
+const PARROTS_DIR = "images/parrots/";
 
 // Global variables
 var contestants=[];
@@ -120,6 +122,12 @@ $(document).ready(function() {
 			}
 		}
 	}			
+
+	function processParrots(parrotList) {
+		var index = Math.floor(Math.random()*parrotList.length);
+		var file = parrotList[index];
+		$("#parrot").attr("src", PARROTS_DIR + file);
+	}
 	
 	
 	// Draw winner methods
@@ -139,6 +147,7 @@ $(document).ready(function() {
 		
 		$("#name").css("color", "black");
 		$("#name").css("text-style:", "none");	
+		$("#parrot").removeAttr("src");
 	}
 	
 	function next() {	
@@ -160,8 +169,9 @@ $(document).ready(function() {
 			$("#name").css("color", "navy");
 			$("#drawButton").attr("disabled", false);	
 			$("#deltagere").fadeIn();
+			setParrot();
 			playWinnerSound();
-			removeContestant(contestants[currentDrawnNameIdx])
+			removeContestant(contestants[currentDrawnNameIdx]);
 		}
 	}
 	
@@ -175,6 +185,12 @@ $(document).ready(function() {
 	function randomizeArray(o){
 		for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
 		return o;
+	}
+
+	function setParrot() {
+		$.getJSON(PARROT_PROVIDER_URL, function(data) {
+			processParrots(data);
+		});
 	}
 	
 	// Add listeners
